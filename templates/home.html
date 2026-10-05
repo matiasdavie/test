@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block page_heading %}Welcome to Knee Rehab{% endblock %}
+
+{% block content %}
+    <section class="welcome-card">
+        <div>
+            <span class="eyebrow">Your rehabilitation workspace</span>
+            <h2>Care, progress, and therapy in one place.</h2>
+            <p>Use the navigation to manage patient information, control a therapy session, and review rehabilitation progress.</p>
+        </div>
+        <a class="primary-link" href="{{ url_for('therapycontrol') }}">Open therapy control <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="quick-links" aria-label="Workspace sections">
+        <a class="feature-card" href="{{ url_for('patient') }}">
+            <span class="feature-icon patient-icon" aria-hidden="true">♡</span>
+            <span class="feature-title">Patient</span>
+            <span class="feature-description">View patient details and care information.</span>
+            <span class="feature-link">Open patient page →</span>
+        </a>
+        <a class="feature-card" href="{{ url_for('therapycontrol') }}">
+            <span class="feature-icon therapy-icon" aria-hidden="true">◉</span>
+            <span class="feature-title">Therapy Control</span>
+            <span class="feature-description">Choose a rehabilitation mode and manage therapy.</span>
+            <span class="feature-link">Open controls →</span>
+        </a>
+        <a class="feature-card" href="{{ url_for('progress') }}">
+            <span class="feature-icon progress-icon" aria-hidden="true">↗</span>
+            <span class="feature-title">Progress</span>
+            <span class="feature-description">Review session outcomes and rehabilitation progress.</span>
+            <span class="feature-link">View progress →</span>
+        </a>
+    </section>
+{% endblock %}

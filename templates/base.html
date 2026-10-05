@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Knee Rehab{% endblock %} | Knee Rehab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark" aria-hidden="true">K</span>
+                <span class="brand-name">Knee Rehab</span>
+            </a>
+
+            <p class="nav-label">Workspace</p>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="{{ url_for('home') }}" class="{% if active_page == 'home' %}active{% endif %}">
+                    <span class="nav-icon" aria-hidden="true">⌂</span> Home
+                </a>
+                <a href="{{ url_for('patient') }}" class="{% if active_page == 'patient' %}active{% endif %}">
+                    <span class="nav-icon" aria-hidden="true">♡</span> Patient
+                </a>
+                <a href="{{ url_for('therapycontrol') }}" class="{% if active_page == 'therapy-control' %}active{% endif %}">
+                    <span class="nav-icon" aria-hidden="true">◉</span> Therapy Control
+                </a>
+                <a href="{{ url_for('progress') }}" class="{% if active_page == 'progress' %}active{% endif %}">
+                    <span class="nav-icon" aria-hidden="true">↗</span> Progress
+                </a>
+                <a href="{{ url_for('actuator_control') }}" class="{% if active_page == 'actuator' %}active{% endif %}">
+                    <span class="nav-icon" aria-hidden="true">⇆</span> Actuator
+                </a>
+            </nav>
+
+            <div class="sidebar-note">
+                <span class="connection-dot" aria-hidden="true"></span>
+                <span><strong>Device online</strong><small>System ready</small></span>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Knee Rehabilitation System</p>
+                    <h1>{% block page_heading %}Welcome{% endblock %}</h1>
+                </div>
+                <span class="topbar-status"><span class="connection-dot" aria-hidden="true"></span> Connected</span>
+            </header>
+
+            <div class="page-content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

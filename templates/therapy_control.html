@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Therapy Control{% endblock %}
+{% block page_heading %}Therapy Control{% endblock %}
+
+{% block content %}
+    <section class="page-card therapy-card">
+        <span class="eyebrow">Rehabilitation session</span>
+        <h2>Configure therapy</h2>
+        <p>Select a patient and therapy type to submit a session request.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="form-messages" role="status" aria-live="polite">
+                    {% for category, message in messages %}
+                        <p class="form-message {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if patients %}
+            <form class="therapy-form" method="POST" action="{{ url_for('start_therapy') }}">
+                <div class="form-field">
+                    <label for="therapy-patient">Select Patient</label>
+                    <select id="therapy-patient" name="patient_id" required>
+                        <option value="">-- Select Patient --</option>
+                        {% for patient in patients %}
+                            <option value="{{ patient.patient_id }}">
+                                {{ patient.name }} ({{ patient.patient_id }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <fieldset class="therapy-mode-field">
+                    <legend>Therapy Type</legend>
+                    <div class="therapy-mode-options">
+                        <label class="therapy-mode-option">
+                            <input type="radio" name="therapy_mode" value="active-assisted" required>
+                            <span>Active-Assisted</span>
+                        </label>
+                        <label class="therapy-mode-option">
+                            <input type="radio" name="therapy_mode" value="passive" required>
+                            <span>Passive</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit">Start Therapy</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="empty-patients">Add a patient before starting a therapy session.</p>
+            <a class="therapy-patients-link" href="{{ url_for('patient') }}">Go to Patients</a>
+        {% endif %}
+    </section>
+{% endblock %}

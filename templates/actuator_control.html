@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Actuator Control{% endblock %}
+{% block page_heading %}Actuator Control{% endblock %}
+
+{% block content %}
+    <section class="page-card actuator-card">
+        <span class="eyebrow">Hardware controls</span>
+        <h2>Linear actuator</h2>
+        <p>Use the controls to move the connected actuator. Keep the stop control accessible while operating it.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="form-messages" role="status" aria-live="polite">
+                    {% for category, message in messages %}
+                        <p class="form-message {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="actuator-controls">
+            <form method="POST" action="{{ url_for('move_forward') }}">
+                <button class="actuator-button forward-button" type="submit">Forward</button>
+            </form>
+            <form method="POST" action="{{ url_for('move_reverse') }}">
+                <button class="actuator-button reverse-button" type="submit">Reverse</button>
+            </form>
+            <form method="POST" action="{{ url_for('move_stop') }}">
+                <button class="actuator-button actuator-stop-button" type="submit">Stop</button>
+            </form>
+        </div>
+
+        <p class="actuator-safety-note">
+            Operate only when the actuator and connected mechanism are clear of people and obstructions.
+        </p>
+    </section>
+{% endblock %}

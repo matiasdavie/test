@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Therapy Session{% endblock %}
+{% block page_heading %}Therapy Session{% endblock %}
+
+{% block content %}
+    <section class="page-card session-card">
+        <div class="session-heading">
+            <span class="eyebrow">Rehabilitation session</span>
+            <span class="session-status"><span class="session-status-dot"></span> SESSION ACTIVE</span>
+        </div>
+        <h2>Therapy session in progress</h2>
+        <p class="session-intro">The session display is active for the selected patient.</p>
+
+        <div class="session-visual" role="img" aria-label="Animated illustration of a leg bending at the knee">
+            <div class="motion-ring motion-ring-one"></div>
+            <div class="motion-ring motion-ring-two"></div>
+            <svg class="leg-illustration" viewBox="0 0 240 260" aria-hidden="true">
+                <path class="leg-upper" d="M112 35 C107 66 104 91 112 124" />
+                <circle class="knee-joint" cx="116" cy="132" r="17" />
+                <path class="leg-lower" d="M121 143 C140 166 157 185 177 208" />
+                <path class="foot-shape" d="M174 207 C190 214 203 222 211 233 C198 238 179 237 165 229" />
+                <path class="motion-arc" d="M72 151 C65 185 82 214 111 226" />
+                <path class="motion-arrow" d="M105 217 L113 228 L99 229" />
+            </svg>
+            <span class="visual-caption">Knee movement</span>
+        </div>
+
+        <div class="session-info">
+            <div>
+                <span class="session-info-label">Patient</span>
+                <strong>{{ patient.name }}</strong>
+                <span class="session-info-subtext">{{ patient.patient_id }}</span>
+            </div>
+            <div>
+                <span class="session-info-label">Therapy type</span>
+                <strong>{{ therapy_mode.replace('-', ' ').title() }}</strong>
+            </div>
+            <div>
+                <span class="session-info-label">Elapsed time</span>
+                <strong id="session-timer" data-started-at="{{ started_at }}">00:00</strong>
+            </div>
+        </div>
+
+        <p class="session-demo-note">
+            This is an app session display only. No physical therapy equipment is connected or being controlled.
+        </p>
+
+        <form method="POST" action="{{ url_for('stop_therapy') }}">
+            <button class="stop-therapy-button" type="submit">Stop Therapy</button>
+        </form>
+    </section>
+
+    <script>
+        const timer = document.getElementById('session-timer');
+        const startedAt = Number(timer.dataset.startedAt) * 1000;
+
+        function updateSessionTimer() {
+            const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+            const hours = Math.floor(elapsedSeconds / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+            timer.textContent = hours > 0
+                ? `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+                : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        updateSessionTimer();
+        window.setInterval(updateSessionTimer, 1000);
+    </script>
+{% endblock %}

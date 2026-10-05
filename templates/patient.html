@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Patients{% endblock %}
+{% block page_heading %}Patients{% endblock %}
+
+{% block content %}
+    <section class="page-card patients-page">
+        <span class="eyebrow">Patient workspace</span>
+        <h2>Patients</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="form-messages" role="status" aria-live="polite">
+                    {% for category, message in messages %}
+                        <p class="form-message {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if patients %}
+            <div class="patient-list">
+                {% for patient in patients %}
+                    <article class="patient-card">
+                        <div class="patient-card-heading">
+                            <h3>{{ patient.name }}</h3>
+                            <span class="patient-id">{{ patient.patient_id }}</span>
+                        </div>
+                        <dl class="patient-details">
+                            <div>
+                                <dt>Age</dt>
+                                <dd>{{ patient.age if patient.age is not none else '—' }}</dd>
+                            </div>
+                            <div>
+                                <dt>Sex</dt>
+                                <dd>{{ patient.sex or '—' }}</dd>
+                            </div>
+                            <div>
+                                <dt>Phone</dt>
+                                <dd>{{ patient.phone or '—' }}</dd>
+                            </div>
+                            <div class="patient-diagnosis">
+                                <dt>Diagnosis</dt>
+                                <dd>{{ patient.diagnosis or '—' }}</dd>
+                            </div>
+                        </dl>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-patients">No patients have been added yet.</p>
+        {% endif %}
+    </section>
+
+    <button class="add-patient-button" type="button" aria-label="Add patient"
+            aria-haspopup="dialog" aria-controls="patient-dialog" onclick="openPatientForm()">
+        <span aria-hidden="true">+</span>
+    </button>
+
+    <dialog class="patient-dialog" id="patient-dialog" aria-labelledby="patient-dialog-title">
+        <div class="patient-dialog-header">
+            <h2 id="patient-dialog-title">Add Patient</h2>
+            <button class="close-dialog-button" type="button" aria-label="Close form"
+                    onclick="closePatientForm()">×</button>
+        </div>
+        <form class="patient-form" method="POST" action="{{ url_for('patient') }}">
+            <div class="form-field">
+                <label for="patient-id">Patient ID</label>
+                <input id="patient-id" type="text" name="patient_id" placeholder="e.g. P001" required>
+            </div>
+            <div class="form-field">
+                <label for="patient-name">Full Name</label>
+                <input id="patient-name" type="text" name="name" placeholder="Enter full name" required>
+            </div>
+            <div class="form-field">
+                <label for="patient-age">Age</label>
+                <input id="patient-age" type="number" name="age" min="0">
+            </div>
+            <div class="form-field">
+                <label for="patient-sex">Sex</label>
+                <select id="patient-sex" name="sex">
+                    <option value="">Select sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="patient-phone">Phone</label>
+                <input id="patient-phone" type="text" name="phone">
+            </div>
+            <div class="form-field form-field-wide">
+                <label for="patient-diagnosis">Diagnosis</label>
+                <textarea id="patient-diagnosis" name="diagnosis"></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Save Patient</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        const patientDialog = document.getElementById('patient-dialog');
+
+        function openPatientForm() {
+            patientDialog.showModal();
+            patientDialog.querySelector('input[name="patient_id"]').focus();
+        }
+
+        function closePatientForm() {
+            patientDialog.close();
+        }
+
+        patientDialog.addEventListener('click', (event) => {
+            if (event.target === patientDialog) {
+                patientDialog.close();
+            }
+        });
+    </script>
+{% endblock %}
