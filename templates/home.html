@@ -5,32 +5,68 @@
 
 {% block content %}
     <section class="welcome-card">
-        <div>
-            <span class="eyebrow">Your rehabilitation workspace</span>
-            <h2>Care, progress, and therapy in one place.</h2>
+        <div class="welcome-copy">
+            <span class="eyebrow">Welcome to Knee Rehab</span>
+            <h2>Care, progress, and therapy<br class="desktop-break"> in one place.</h2>
             <p>Use the navigation to manage patient information, control a therapy session, and review rehabilitation progress.</p>
+            <a class="primary-link" href="{{ url_for('therapycontrol') }}">
+                <span class="play-icon" aria-hidden="true">▶</span>
+                Open therapy control
+                <span class="link-arrow" aria-hidden="true">›</span>
+            </a>
         </div>
-        <a class="primary-link" href="{{ url_for('therapycontrol') }}">Open therapy control <span aria-hidden="true">→</span></a>
+        <div class="welcome-art" aria-hidden="true">
+            <div class="art-orbit art-orbit-outer"></div>
+            <div class="art-orbit art-orbit-inner"></div>
+            <svg class="rehab-illustration" viewBox="0 0 520 360">
+                <defs>
+                    <linearGradient id="frameGradient" x1="0" x2="1" y1="0" y2="1">
+                        <stop offset="0" stop-color="#fff"/>
+                        <stop offset="1" stop-color="#9bb8dc"/>
+                    </linearGradient>
+                    <linearGradient id="braceGradient" x1="0" x2="1">
+                        <stop offset="0" stop-color="#3565a0"/>
+                        <stop offset="1" stop-color="#122f54"/>
+                    </linearGradient>
+                </defs>
+                <ellipse cx="282" cy="314" rx="191" ry="17" fill="#8cb4e7" opacity=".28"/>
+                <path d="M126 279h275l35 18H111z" fill="url(#frameGradient)" stroke="#6986aa" stroke-width="5" stroke-linejoin="round"/>
+                <path d="m196 279 28-89 39 7 23 82M350 279l-13-97 35-5 56 102" fill="url(#frameGradient)" stroke="#6986aa" stroke-width="6" stroke-linejoin="round"/>
+                <circle cx="199" cy="291" r="14" fill="#173d6b" stroke="#dceaff" stroke-width="7"/>
+                <circle cx="421" cy="291" r="14" fill="#173d6b" stroke="#dceaff" stroke-width="7"/>
+                <path d="M132 229h96l18 17h-89zM267 229h101l17 17H266z" fill="#eaf3ff" stroke="#7f9ab9" stroke-width="5" stroke-linejoin="round"/>
+                <path d="M169 205c-15-24-31-48-44-76-9-20-7-35 6-42 15-8 28 2 38 19l54 70 89-23 56-48c14-12 29-16 39-5 10 10 5 25-9 39l-66 68c-9 9-19 14-31 15l-91 9c-18 2-31-5-41-26Z" fill="#d9e9fb" stroke="#7791b0" stroke-width="6" stroke-linejoin="round"/>
+                <path d="m129 96 28-14 18 29-29 18zM206 177l23 24-25 21-24-28zM328 135l22 25-25 21-23-26z" fill="url(#braceGradient)" stroke="#17395f" stroke-width="4" stroke-linejoin="round"/>
+                <path d="m127 83 17-8 12 5 7 11-26 14-11-8zM191 214l12-17 17-5 18 7 8 13-25 19-22-4zM313 169l18-19 20 2 12 9 1 16-24 17-22-7z" fill="#274e7b" stroke="#17395f" stroke-width="4" stroke-linejoin="round"/>
+                <circle cx="286" cy="192" r="13" fill="#fff" stroke="#31577f" stroke-width="7"/>
+            </svg>
+        </div>
     </section>
 
     <section class="quick-links" aria-label="Workspace sections">
-        <a class="feature-card" href="{{ url_for('patient') }}">
-            <span class="feature-icon patient-icon" aria-hidden="true">♡</span>
+        <a class="feature-card patient-feature" href="{{ url_for('patient') }}">
+            <span class="feature-icon patient-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.8 8.7c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11a4.7 4.7 0 0 1 8.8-2.3 4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+            </span>
             <span class="feature-title">Patient</span>
             <span class="feature-description">View patient details and care information.</span>
-            <span class="feature-link">Open patient page →</span>
+            <span class="feature-link">View patients <span aria-hidden="true">›</span></span>
         </a>
-        <a class="feature-card" href="{{ url_for('therapycontrol') }}">
-            <span class="feature-icon therapy-icon" aria-hidden="true">◉</span>
+        <a class="feature-card therapy-feature" href="{{ url_for('therapycontrol') }}">
+            <span class="feature-icon therapy-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg>
+            </span>
             <span class="feature-title">Therapy Control</span>
             <span class="feature-description">Choose a rehabilitation mode and manage therapy.</span>
-            <span class="feature-link">Open controls →</span>
+            <span class="feature-link">Open therapy control <span aria-hidden="true">›</span></span>
         </a>
-        <a class="feature-card" href="{{ url_for('progress') }}">
-            <span class="feature-icon progress-icon" aria-hidden="true">↗</span>
+        <a class="feature-card progress-feature" href="{{ url_for('progress') }}">
+            <span class="feature-icon progress-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-9"/><path d="M15 6h6v6"/></svg>
+            </span>
             <span class="feature-title">Progress</span>
             <span class="feature-description">Review session outcomes and rehabilitation progress.</span>
-            <span class="feature-link">View progress →</span>
+            <span class="feature-link">View progress <span aria-hidden="true">›</span></span>
         </a>
     </section>
 {% endblock %}

@@ -1,8 +1,8 @@
 :root {
     color-scheme: light;
     font-family: Inter, "Segoe UI", Arial, sans-serif;
-    color: #1d2a3b;
-    background: #f3f6fb;
+    color: #172d4a;
+    background: #f4f7fc;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     --navy: #14243a;
@@ -35,40 +35,56 @@ a {
     position: sticky;
     top: 0;
     display: flex;
-    flex: 0 0 250px;
+    flex: 0 0 clamp(250px, 18.4vw, 304px);
     flex-direction: column;
-    width: 250px;
+    width: clamp(250px, 18.4vw, 304px);
     height: 100vh;
-    padding: 26px 16px 20px;
+    padding: 24px 16px 20px;
     color: #eaf0fa;
-    background: var(--navy);
+    background: linear-gradient(165deg, #12243b 0%, #102139 100%);
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 10px;
+    gap: 14px;
+    padding: 0 8px;
     color: white;
     text-decoration: none;
-    font-size: 1.12rem;
-    font-weight: 750;
-    letter-spacing: -0.03em;
+}
+
+.brand-copy {
+    display: grid;
+    gap: 5px;
 }
 
 .brand-mark {
     display: grid;
-    width: 38px;
-    height: 38px;
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
     place-items: center;
-    border-radius: 12px;
-    background: #4975e8;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #397bf4, #1555d5);
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.55rem;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgb(31 93 223 / 30%);
+}
+
+.brand-name {
+    font-size: 1.14rem;
+    font-weight: 780;
+    letter-spacing: -0.03em;
+}
+
+.brand-tagline {
+    color: #a8b8d0;
+    font-size: 0.77rem;
 }
 
 .nav-label {
-    margin: 42px 10px 12px;
+    margin: 38px 10px 14px;
     color: #8fa0b8;
     font-size: 0.68rem;
     font-weight: 800;
@@ -78,39 +94,43 @@ a {
 
 .main-nav {
     display: grid;
-    gap: 6px;
+    gap: 8px;
 }
 
 .main-nav a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 46px;
-    padding: 0 12px;
-    border-radius: 10px;
+    gap: 16px;
+    min-height: 58px;
+    padding: 0 16px;
+    border-radius: 13px;
     color: #bdc9d9;
     text-decoration: none;
-    font-size: 0.91rem;
-    font-weight: 600;
+    font-size: 0.98rem;
+    font-weight: 650;
     transition: color 160ms ease, background 160ms ease;
 }
 
 .main-nav a:hover,
 .main-nav a.active {
     color: white;
-    background: #263b59;
+    background: linear-gradient(105deg, #2765b5, #2459a0);
 }
 
 .main-nav a.active {
-    box-shadow: inset 3px 0 #7ea0ff;
+    box-shadow: 0 8px 18px rgb(7 24 49 / 20%);
 }
 
 .nav-icon {
     display: inline-grid;
-    width: 22px;
+    flex: 0 0 24px;
+    width: 24px;
     place-items: center;
-    color: #93afff;
-    font-size: 1.15rem;
+    fill: none;
+    stroke: #9fbcf2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
 }
 
 .sidebar-note {
@@ -118,7 +138,7 @@ a {
     align-items: center;
     gap: 11px;
     margin-top: auto;
-    padding: 14px 12px;
+    padding: 17px 14px;
     border: 1px solid #2a3d59;
     border-radius: 12px;
     background: #1b304c;
@@ -153,6 +173,7 @@ a {
 .content {
     flex: 1;
     min-width: 0;
+    background: #f4f7fc;
 }
 
 .topbar {
@@ -160,10 +181,10 @@ a {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    min-height: 112px;
-    padding: 24px clamp(24px, 5vw, 64px);
+    min-height: 86px;
+    padding: 18px clamp(26px, 3vw, 48px);
     border-bottom: 1px solid var(--border);
-    background: #fff;
+    background: rgb(255 255 255 / 94%);
 }
 
 .eyebrow {
@@ -174,6 +195,18 @@ a {
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .topbar h1 {
@@ -197,61 +230,172 @@ a {
     white-space: nowrap;
 }
 
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topbar-actions form {
+    margin: 0;
+}
+
+.logout-button {
+    min-height: 42px;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: #36577f;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 160ms ease;
+}
+
+.logout-button:hover {
+    color: var(--blue);
+}
+
+.account-avatar {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #3979e4, #1453bd);
+    box-shadow: 0 4px 10px rgb(37 99 201 / 22%);
+}
+
+.account-avatar svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
 .page-content {
-    width: min(1120px, 100%);
+    width: min(1600px, 100%);
     margin: 0 auto;
-    padding: clamp(24px, 5vw, 56px);
+    padding: clamp(24px, 2.5vw, 42px);
 }
 
 .welcome-card {
+    position: relative;
     display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 32px;
-    min-height: 260px;
-    padding: clamp(26px, 5vw, 48px);
+    align-items: center;
+    min-height: 328px;
+    padding: clamp(30px, 3vw, 48px);
     overflow: hidden;
-    border-radius: 20px;
-    background: linear-gradient(125deg, #1d3760 0%, #3566be 58%, #6e91eb 100%);
-    box-shadow: 0 18px 44px rgb(40 76 137 / 17%);
-    color: #fff;
+    border: 1px solid #dceaff;
+    border-radius: 16px;
+    background: linear-gradient(112deg, #e4f0ff 0%, #eaf4ff 48%, #d5e9ff 100%);
+    box-shadow: 0 12px 30px rgb(37 82 143 / 7%);
+    color: var(--navy);
+}
+
+.welcome-copy {
+    position: relative;
+    z-index: 2;
+    width: min(60%, 720px);
 }
 
 .welcome-card .eyebrow {
-    color: #cbd9ff;
+    color: #4385dc;
+    font-size: 0.8rem;
 }
 
 .welcome-card h2 {
-    max-width: 600px;
-    margin: 0 0 14px;
-    font-size: clamp(1.8rem, 4vw, 2.75rem);
-    line-height: 1.12;
+    max-width: 700px;
+    margin: 0 0 16px;
+    color: #142d4d;
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    line-height: 1.05;
     letter-spacing: -0.05em;
 }
 
 .welcome-card p {
     max-width: 620px;
-    margin: 0;
-    color: #e1eaff;
-    line-height: 1.7;
+    margin: 0 0 20px;
+    color: #59779f;
+    font-size: clamp(0.96rem, 1.1vw, 1.12rem);
+    line-height: 1.6;
 }
 
 .primary-link {
     display: inline-flex;
-    flex: 0 0 auto;
     align-items: center;
-    gap: 12px;
-    padding: 13px 17px;
-    border-radius: 10px;
-    background: #fff;
-    color: #2856a8;
+    gap: 14px;
+    min-height: 52px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: linear-gradient(110deg, #2369ed, #1557df);
+    color: #fff;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 800;
+    font-size: 0.92rem;
+    font-weight: 750;
+    box-shadow: 0 8px 18px rgb(29 92 220 / 20%);
 }
 
 .primary-link:hover {
-    background: #f0f4ff;
+    background: #154fc9;
+}
+
+.play-icon {
+    display: grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 22%);
+    font-size: 0.62rem;
+}
+
+.link-arrow {
+    font-size: 1.5rem;
+    line-height: 0.8;
+}
+
+.welcome-art {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 47%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.art-orbit {
+    position: absolute;
+    right: -5%;
+    bottom: -84%;
+    aspect-ratio: 1;
+    border: 1px solid rgb(91 147 218 / 12%);
+    border-radius: 50%;
+    background: rgb(130 181 239 / 8%);
+}
+
+.art-orbit-outer {
+    width: 105%;
+}
+
+.art-orbit-inner {
+    right: -23%;
+    bottom: -105%;
+    width: 125%;
+    background: rgb(106 165 230 / 9%);
+}
+
+.rehab-illustration {
+    position: absolute;
+    right: 2%;
+    bottom: 1%;
+    width: min(100%, 560px);
+    height: 96%;
+    filter: drop-shadow(0 14px 12px rgb(47 88 136 / 12%));
 }
 
 .quick-links {
@@ -270,13 +414,32 @@ a {
 }
 
 .feature-card {
+    position: relative;
     display: flex;
-    min-height: 220px;
+    min-height: 258px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 22px;
+    padding: 24px 26px;
+    overflow: hidden;
     text-decoration: none;
     transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.feature-card::after {
+    position: absolute;
+    right: -60px;
+    bottom: -140px;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    background: var(--card-accent, rgb(73 117 232 / 8%));
+    content: "";
+    pointer-events: none;
+}
+
+.feature-card > span {
+    position: relative;
+    z-index: 1;
 }
 
 .feature-card:hover {
@@ -287,12 +450,21 @@ a {
 
 .feature-icon {
     display: grid;
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
     place-items: center;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border-radius: 18px;
+}
+
+.feature-icon svg {
+    width: 29px;
+    height: 29px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.2;
 }
 
 .patient-icon {
@@ -300,9 +472,17 @@ a {
     color: #c94f75;
 }
 
+.patient-feature {
+    --card-accent: rgb(231 128 166 / 9%);
+}
+
 .therapy-icon {
     background: #eaf0ff;
     color: #4975e8;
+}
+
+.therapy-feature {
+    --card-accent: rgb(73 117 232 / 9%);
 }
 
 .progress-icon {
@@ -310,25 +490,38 @@ a {
     color: #2c9b6c;
 }
 
+.progress-feature {
+    --card-accent: rgb(74 194 145 / 9%);
+}
+
 .feature-title {
     color: var(--navy);
-    font-size: 1rem;
+    font-size: 1.32rem;
     font-weight: 800;
 }
 
 .feature-description {
+    max-width: 280px;
     margin-top: 8px;
     color: var(--muted);
-    font-size: 0.84rem;
-    line-height: 1.55;
+    font-size: 0.96rem;
+    line-height: 1.6;
 }
 
 .feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     margin-top: auto;
-    padding-top: 18px;
+    padding-top: 20px;
     color: var(--blue);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 800;
+}
+
+.feature-link span {
+    font-size: 1.45rem;
+    line-height: 0.8;
 }
 
 .page-card {
@@ -390,7 +583,46 @@ a {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    margin: 0;
+    cursor: pointer;
+    list-style: none;
+}
+
+.patient-card-heading::-webkit-details-marker {
+    display: none;
+}
+
+.patient-card-heading:focus-visible {
+    border-radius: 4px;
+    outline: 3px solid rgb(73 117 232 / 35%);
+    outline-offset: 5px;
+}
+
+.patient-card[open] .patient-card-heading {
     margin-bottom: 16px;
+}
+
+.patient-card-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.patient-toggle {
+    color: var(--blue);
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.patient-toggle::after {
+    display: inline-block;
+    margin-left: 6px;
+    content: "+";
+}
+
+.patient-card[open] .patient-toggle::after {
+    content: "−";
 }
 
 .patient-card-heading h3 {
@@ -427,6 +659,50 @@ a {
     color: #1d2a3b;
     font-size: 0.9rem;
     overflow-wrap: anywhere;
+}
+
+.patient-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.edit-patient-button {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #d7e0ec;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--navy);
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-patient-button:hover {
+    border-color: #bdcbea;
+    background: #f7f9fc;
+}
+
+.delete-patient-button {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #f1c7ca;
+    border-radius: 9px;
+    background: #fff;
+    color: #a52d35;
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.delete-patient-button:hover {
+    border-color: #e7a5aa;
+    background: #fff0f0;
 }
 
 .patient-diagnosis {
@@ -517,20 +793,66 @@ a {
     margin: 0 auto;
 }
 
-.actuator-card {
-    max-width: 760px;
-    margin: 0 auto;
+.passive-actuator-panel {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fbfcfe;
 }
 
-.actuator-controls {
+.passive-actuator-panel[hidden] {
+    display: none;
+}
+
+.passive-actuator-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.passive-actuator-heading h3 {
+    margin: 0 0 5px;
+    color: var(--navy);
+    font-size: 1rem;
+}
+
+.passive-actuator-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.84rem;
+}
+
+.actuator-disconnected-status {
+    flex: 0 0 auto;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: #fff0f0;
+    color: #a52d35;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.actuator-connected-status {
+    flex: 0 0 auto;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: #e8f7ef;
+    color: #23774f;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.passive-duration-field {
+    max-width: 240px;
+    margin-top: 18px;
+}
+
+.passive-actuator-panel .actuator-controls {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
-    margin-top: 28px;
-}
-
-.actuator-controls form {
-    margin: 0;
+    margin-top: 18px;
 }
 
 .actuator-button {
@@ -543,6 +865,11 @@ a {
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+}
+
+.actuator-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
 .actuator-button:focus-visible {
@@ -574,7 +901,7 @@ a {
     background: #a82e3b;
 }
 
-.actuator-safety-note {
+.passive-actuator-panel .actuator-safety-note {
     margin: 22px 0 0;
     padding: 12px 14px;
     border-radius: 8px;
@@ -951,6 +1278,81 @@ a {
     background: #365fc9;
 }
 
+.login-page {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 24px;
+    background:
+        radial-gradient(ellipse at top left, rgb(73 117 232 / 12%), transparent 42%),
+        #f3f6fb;
+}
+
+.login-card {
+    width: min(100%, 440px);
+    padding: clamp(28px, 6vw, 48px);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgb(20 36 58 / 10%);
+}
+
+.login-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    color: var(--navy);
+    font-size: 1.05rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.login-card .eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.login-card h1 {
+    margin: 0;
+    color: var(--navy);
+    font-size: clamp(1.7rem, 5vw, 2rem);
+    letter-spacing: -0.04em;
+}
+
+.login-description {
+    margin: 10px 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.login-form {
+    display: grid;
+    gap: 20px;
+    margin-top: 28px;
+}
+
+.login-form button {
+    min-height: 48px;
+    margin-top: 4px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--blue);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background: #365fc9;
+}
+
 a:focus-visible {
     outline: 3px solid #91adff;
     outline-offset: 3px;
@@ -983,6 +1385,14 @@ a:focus-visible {
         display: none;
     }
 
+    .brand-mark {
+        flex-basis: 46px;
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        font-size: 1.3rem;
+    }
+
     .main-nav {
         display: flex;
         gap: 6px;
@@ -1006,6 +1416,10 @@ a:focus-visible {
         padding: 18px 20px;
     }
 
+    .topbar-actions {
+        gap: 10px;
+    }
+
     .topbar-status {
         padding: 8px;
         font-size: 0;
@@ -1021,10 +1435,30 @@ a:focus-visible {
     }
 
     .welcome-card {
+        min-height: 420px;
         align-items: flex-start;
-        flex-direction: column;
-        gap: 24px;
-        min-height: 0;
+        padding: 28px 24px;
+    }
+
+    .welcome-copy {
+        width: 100%;
+    }
+
+    .welcome-card h2 {
+        max-width: 480px;
+        font-size: clamp(1.9rem, 8vw, 2.5rem);
+    }
+
+    .desktop-break {
+        display: none;
+    }
+
+    .welcome-art {
+        top: auto;
+        bottom: 0;
+        width: 78%;
+        height: 48%;
+        opacity: 0.75;
     }
 
     .patient-dialog {
@@ -1048,8 +1482,12 @@ a:focus-visible {
         grid-template-columns: 1fr;
     }
 
-    .actuator-controls {
+    .passive-actuator-panel .actuator-controls {
         grid-template-columns: 1fr;
+    }
+
+    .passive-actuator-heading {
+        flex-direction: column;
     }
 
     .form-field-wide,

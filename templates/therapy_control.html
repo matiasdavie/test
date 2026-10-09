@@ -41,11 +41,33 @@
                             <span>Active-Assisted</span>
                         </label>
                         <label class="therapy-mode-option">
-                            <input type="radio" name="therapy_mode" value="passive" required>
+                            <input id="passive-mode" type="radio" name="therapy_mode" value="passive" required>
                             <span>Passive</span>
                         </label>
                     </div>
                 </fieldset>
+
+                <section class="passive-actuator-panel" id="passive-actuator-controls" hidden
+                         aria-labelledby="actuator-controls-title">
+                    <div class="passive-actuator-heading">
+                        <div>
+                            <h3 id="actuator-controls-title">Automatic actuator cycle</h3>
+                            <p>Passive mode automatically alternates the actuator direction.</p>
+                        </div>
+                        <span class="{% if actuator_available %}actuator-connected-status{% else %}actuator-disconnected-status{% endif %}">
+                            {% if actuator_available %}GPIO ready{% else %}GPIO unavailable{% endif %}
+                        </span>
+                    </div>
+                    <div class="form-field passive-duration-field">
+                        <label for="duration-minutes">Session duration (minutes)</label>
+                        <input id="duration-minutes" name="duration_minutes" type="number"
+                               min="1" max="60" step="1" value="5" required disabled>
+                    </div>
+                    <p class="actuator-safety-note">
+                        The actuator runs forward for 20 seconds, then reverse for 20 seconds, repeating until the selected
+                        duration ends. Hardware travel limits and an independent emergency stop must remain enabled.
+                    </p>
+                </section>
 
                 <div class="form-actions">
                     <button type="submit">Start Therapy</button>
@@ -56,4 +78,20 @@
             <a class="therapy-patients-link" href="{{ url_for('patient') }}">Go to Patients</a>
         {% endif %}
     </section>
+
+    <script>
+        const passiveMode = document.getElementById('passive-mode');
+        const passiveActuatorControls = document.getElementById('passive-actuator-controls');
+
+        function updateActuatorControls() {
+            passiveActuatorControls.hidden = !passiveMode.checked;
+            const durationInput = document.getElementById('duration-minutes');
+            durationInput.disabled = !passiveMode.checked;
+        }
+
+        document.querySelectorAll('input[name="therapy_mode"]').forEach((mode) => {
+            mode.addEventListener('change', updateActuatorControls);
+        });
+        updateActuatorControls();
+    </script>
 {% endblock %}

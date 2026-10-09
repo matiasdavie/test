@@ -11,31 +11,34 @@
         <aside class="sidebar">
             <a class="brand" href="{{ url_for('home') }}">
                 <span class="brand-mark" aria-hidden="true">K</span>
-                <span class="brand-name">Knee Rehab</span>
+                <span class="brand-copy">
+                    <span class="brand-name">Knee Rehab</span>
+                    <span class="brand-tagline">Rehabilitation Made Simple</span>
+                </span>
             </a>
 
             <p class="nav-label">Workspace</p>
             <nav class="main-nav" aria-label="Main navigation">
                 <a href="{{ url_for('home') }}" class="{% if active_page == 'home' %}active{% endif %}">
-                    <span class="nav-icon" aria-hidden="true">⌂</span> Home
+                    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg> Home
                 </a>
                 <a href="{{ url_for('patient') }}" class="{% if active_page == 'patient' %}active{% endif %}">
-                    <span class="nav-icon" aria-hidden="true">♡</span> Patient
+                    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/></svg> Patient
                 </a>
                 <a href="{{ url_for('therapycontrol') }}" class="{% if active_page == 'therapy-control' %}active{% endif %}">
-                    <span class="nav-icon" aria-hidden="true">◉</span> Therapy Control
+                    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg> Therapy Control
                 </a>
                 <a href="{{ url_for('progress') }}" class="{% if active_page == 'progress' %}active{% endif %}">
-                    <span class="nav-icon" aria-hidden="true">↗</span> Progress
-                </a>
-                <a href="{{ url_for('actuator_control') }}" class="{% if active_page == 'actuator' %}active{% endif %}">
-                    <span class="nav-icon" aria-hidden="true">⇆</span> Actuator
+                    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 9 11l4 4 8-9"/><path d="M15 6h6v6M3 21h18"/></svg> Progress
                 </a>
             </nav>
 
             <div class="sidebar-note">
                 <span class="connection-dot" aria-hidden="true"></span>
-                <span><strong>Device online</strong><small>System ready</small></span>
+                <span>
+                    <strong>{% if actuator_available %}Actuator GPIO ready{% else %}Actuator unavailable{% endif %}</strong>
+                    <small>{% if actuator_available %}GPIO configured{% else %}GPIO hardware not detected{% endif %}</small>
+                </span>
             </div>
         </aside>
 
@@ -43,9 +46,20 @@
             <header class="topbar">
                 <div>
                     <p class="eyebrow">Knee Rehabilitation System</p>
-                    <h1>{% block page_heading %}Welcome{% endblock %}</h1>
+                    <h1 class="visually-hidden">{% block page_heading %}Welcome{% endblock %}</h1>
                 </div>
-                <span class="topbar-status"><span class="connection-dot" aria-hidden="true"></span> Connected</span>
+                <div class="topbar-actions">
+                    <span class="topbar-status">
+                        <span class="connection-dot" aria-hidden="true"></span>
+                        {% if actuator_available %}GPIO ready{% else %}GPIO unavailable{% endif %}
+                    </span>
+                    <span class="account-avatar" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/></svg>
+                    </span>
+                    <form method="post" action="{{ url_for('logout') }}">
+                        <button class="logout-button" type="submit">Log out</button>
+                    </form>
+                </div>
             </header>
 
             <div class="page-content">

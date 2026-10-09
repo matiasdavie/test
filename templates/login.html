@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | Knee Rehab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+    <main class="login-card">
+        <a class="login-brand" href="{{ url_for('login') }}" aria-label="Knee Rehab sign in">
+            <span class="brand-mark" aria-hidden="true">K</span>
+            <span>Knee Rehab</span>
+        </a>
+        <span class="eyebrow">Secure access</span>
+        <h1>Welcome back</h1>
+        <p class="login-description">Sign in to continue to your rehabilitation workspace.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="form-messages" role="status" aria-live="polite">
+                    {% for category, message in messages %}
+                        <p class="form-message {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form class="login-form" method="post" action="{{ url_for('login') }}">
+            <div class="form-field">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+            </div>
+            <div class="form-field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
+            </div>
+            <button type="submit">Sign in</button>
+        </form>
+    </main>
+</body>
+</html>

@@ -7,7 +7,10 @@
     <section class="page-card session-card">
         <div class="session-heading">
             <span class="eyebrow">Rehabilitation session</span>
-            <span class="session-status"><span class="session-status-dot"></span> SESSION ACTIVE</span>
+            <span class="session-status">
+                <span class="session-status-dot"></span>
+                <span id="therapy-session-status">SESSION ACTIVE</span>
+            </span>
         </div>
         <h2>Therapy session in progress</h2>
         <p class="session-intro">The session display is active for the selected patient.</p>
@@ -35,6 +38,9 @@
             <div>
                 <span class="session-info-label">Therapy type</span>
                 <strong>{{ therapy_mode.replace('-', ' ').title() }}</strong>
+                {% if therapy_mode == 'passive' %}
+                    <span class="session-info-subtext">{{ duration_seconds // 60 }} minute session</span>
+                {% endif %}
             </div>
             <div>
                 <span class="session-info-label">Elapsed time</span>
@@ -42,9 +48,22 @@
             </div>
         </div>
 
-        <p class="session-demo-note">
-            This is an app session display only. No physical therapy equipment is connected or being controlled.
-        </p>
+        {% if therapy_mode == 'passive' %}
+            <p class="session-demo-note">
+                Automatic cycle: 20 seconds forward, then 20 seconds reverse. Movement stops when the selected session duration ends.
+            </p>
+            <div class="actuator-live-indicator" id="actuator-live-indicator"
+                 data-duration-seconds="{{ duration_seconds }}"
+                 data-initial-status="{{ actuator_status }}"
+                 data-initial-direction="{{ actuator_direction }}" aria-live="polite">
+                <span class="session-status-dot"></span>
+                <span id="actuator-state-text">Actuator: {{ actuator_status }} · Direction: {{ actuator_direction }}</span>
+            </div>
+        {% else %}
+            <p class="session-demo-note">
+                Active-assisted mode is selected for this session.
+            </p>
+        {% endif %}
 
         <form method="POST" action="{{ url_for('stop_therapy') }}">
             <button class="stop-therapy-button" type="submit">Stop Therapy</button>
@@ -54,6 +73,8 @@
     <script>
         const timer = document.getElementById('session-timer');
         const startedAt = Number(timer.dataset.startedAt) * 1000;
+        const passiveIndicator = document.getElementById('actuator-live-indicator');
+        const sessionStatus = document.getElementById('therapy-session-status');
 
         function updateSessionTimer() {
             const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
@@ -65,7 +86,42 @@
                 : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
+        async function updateActuatorStatus() {
+            if (!passiveIndicator) {
+                return;
+            }
+
+            try {
+                const response = await fetch('{{ url_for("actuator_status_route") }}', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error('Unable to retrieve actuator status.');
+                }
+                const state = await response.json();
+                document.getElementById('actuator-state-text').textContent =
+                    `Actuator: ${state.status} · Direction: ${state.direction}`;
+                if (state.status === 'moving') {
+                    sessionStatus.textContent = 'SESSION ACTIVE';
+                } else if (state.status === 'completed') {
+                    sessionStatus.textContent = 'SESSION COMPLETE';
+                } else if (state.status === 'error') {
+                    sessionStatus.textContent = 'ACTUATOR ERROR';
+                } else {
+                    sessionStatus.textContent = 'ACTUATOR STOPPED';
+                }
+            } catch (error) {
+                document.getElementById('actuator-state-text').textContent =
+                    'Actuator status unavailable. Use the hardware emergency stop if needed.';
+                sessionStatus.textContent = 'STATUS UNAVAILABLE';
+            }
+        }
+
         updateSessionTimer();
         window.setInterval(updateSessionTimer, 1000);
+        if (passiveIndicator) {
+            updateActuatorStatus();
+            window.setInterval(updateActuatorStatus, 1000);
+        }
     </script>
 {% endblock %}
